@@ -8,7 +8,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ("appjesusgarcia", "0002_delete_tablaejemplo"),
+        ("kozel", "0002_delete_tablaejemplo"),
     ]
 
     operations = [
