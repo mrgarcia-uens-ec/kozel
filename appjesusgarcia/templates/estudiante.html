@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>Ficha del Estudiante</h1>
+
+<div style="margin-left: 20px;">
+    <img src="{% static 'images/fotos-estudiantes/' %}{{ estudiante.foto }}" width="200">
+    <hr>
+
+    <br>
+
+    <form action="/app1/estudiante/{{ estudiante.id }}/" method="post">
+        {% csrf_token %}
+
+        {{ form }}
+        <input type="submit" value="Guardar">
+    </form>
+    <br>
+
+    <a href="/app1/estudiantes">Volver</a>
+</div>
+{% endblock %} 

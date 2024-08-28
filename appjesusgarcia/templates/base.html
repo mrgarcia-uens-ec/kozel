@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <meta charset=""utf-8">
+        <title>Web UENS</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/estilos.css' %}">
+    </head>
+
+    <body>
+        <header class="main-header">
+            <a class="logo-header" href="/app1/estudiantes">
+                <span class="site-name">Unidad Educativa Nueva Semilla</span>
+                <span class="site_desc">Web de Estudiantes</span>
+            </a>
+
+            <nav>
+                <ul>
+                    <li><a href="/app1/estudiantes">Estudiantes</a></li>
+                    <li><a href="/app1/cursos">Cursos</a></li>
+                    <li><a href="/app1/programa_academico">Programa Académico</a></li>                    
+                </ul>
+            </nav>
+        </header>
+
+        {% block content %} 
+        {% endblock content %}
+    </body>
+</html>
