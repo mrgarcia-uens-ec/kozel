@@ -1,6 +1,9 @@
 from django import forms
 from .models import Curso
 
+class FormBoton(forms.Form):
+     texto = forms.CharField(label="Botón")
+
 class FormBusqueda(forms.Form):
     filtro = forms.CharField(label="Filtrar por", required=False)
 

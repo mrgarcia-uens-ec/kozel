@@ -1,0 +1,19 @@
+<h1>Menu</h1>
+<br>
+<form action="/kozel/catalogo" method="post">
+    {% csrf_token %}
+    
+    {{ form }}
+</form>
+
+<img src="">Imagen de la página</img>
+<br>
+
+<ul>
+    {% for producto in lista_productos_mes %}
+        <p>
+            {{ producto.nombre }} 
+            <img src="">
+        </p>
+    {% endfor %}
+</ul>

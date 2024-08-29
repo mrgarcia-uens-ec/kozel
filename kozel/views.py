@@ -10,10 +10,42 @@ from .models import Estudiante
 
 from .forms import FormBusqueda
 from .forms import FormEstudiante
+from .forms import FormBoton
+
+from .models import TipoArticulo
+from .models import Articulo
+from .models import Variedad
+from .models import Carrito
+from .models import CarritoVariedad
 
 def index(request):
-    return HttpResponse("Hola")
+    contexto = { }
+    return render(request, "inicio.html", contexto)
 
+def busqueda(request):
+    form = FormBusqueda(request.POST)
+    lista_productos_mes = Articulo.objects.filter(producto_mes = 'SI')
+
+    contexto = { 
+        "form" : form,
+        "lista_productos_mes": lista_productos_mes
+    }
+
+    return render(request, "busqueda.html", contexto)
+
+def catalogo(request):
+    contexto = { }
+    return render(request, "catalogo.html", contexto)
+
+
+
+
+
+
+
+
+
+# ===========================================================
 def adios(request):
     return HttpResponse("Adiós")
 
