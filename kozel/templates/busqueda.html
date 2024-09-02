@@ -1,6 +1,8 @@
+{% load static %}
+
 <h1>Menu</h1>
 <br>
-<form action="/kozel/catalogo" method="post">
+<form action="/kozel/busqueda" method="post">
     {% csrf_token %}
     
     {{ form }}
@@ -9,11 +11,9 @@
 <img src="">Imagen de la página</img>
 <br>
 
-<ul>
-    {% for producto in lista_productos_mes %}
-        <p>
-            {{ producto.nombre }} 
-            <img src="">
-        </p>
-    {% endfor %}
-</ul>
+{% for producto in lista_productos_mes %}
+    <p>
+        {{ producto.nombre }}
+        <img src="{% static 'images/fotos-kozel/'%}{{producto.foto1}}" width="200">
+    </p>
+{% endfor %}
