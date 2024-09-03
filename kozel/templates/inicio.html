@@ -1,8 +1,12 @@
-<h1>KOZEL</h1>
-<h3>Ropa Moderna</h3>
+{% extends "base.html" %}
+{% load static %}
 
-<form action="/kozel/busqueda" method="post">
-    {% csrf_token %}
-    
-    <input type="submit" value="Pulsa para continuar">
-</form>
+{% block content %}
+
+    <a href="/kozel/busqueda">
+        <img src="{% static 'images/fotos-kozel/Portada.png' %}" class="portada">
+    </a>
+
+{% endblock %}
+
+

@@ -23,43 +23,53 @@ def index(request):
     return render(request, "inicio.html", contexto)
 
 def busqueda(request):
+    form = FormBusqueda()    
+    lista_productos_mes = Articulo.objects.filter(producto_mes = 'SI')
+
+    contexto = { 
+        "form" : form,
+        "lista_productos_mes": agrupar_en_filas(lista_productos_mes)
+    }
+    return render(request, "busqueda.html", contexto)
+
+def catalogo(request):
     if request.method == 'POST':
         form = FormBusqueda(request.POST)
         if form.is_valid():
             filtro = form.cleaned_data["filtro"]
             filtroQ = Q(nombre__contains=filtro) | Q(descripcion__contains=filtro)
-        #else:
-        #    form = FormBusqueda()
-        #    filtroQ = ~Q(pk__in=[])
 
             productos_filtrados = Articulo.objects.filter(filtroQ)
             contexto = {
                 "filtro": filtro, 
                 "productos_filtrados": productos_filtrados,
             }
-            return render(request, "catalogo.html", contexto)       
-    else:
-        form = FormBusqueda()    
-        lista_productos_mes = Articulo.objects.filter(producto_mes = 'SI')
-        contexto = { 
-            "form" : form,
-            "lista_productos_mes": lista_productos_mes
-        }
-        return render(request, "busqueda.html", contexto)
-
-#def catalogo(request):
-#    contexto = { }
-#    return render(request, "catalogo.html", contexto)
-
+            return render(request, "catalogo.html", contexto)
+               
 def detalle(request, id_articulo):
-    articulo = Estudiante.objects.get(pk=id_articulo)
+    articulo = Articulo.objects.get(pk=id_articulo)
     contexto = {
         "articulo" : articulo
     }
     
     return render(request, "detalle.html", contexto)
 
+def agrupar_en_filas(productos):
+    # Crear una lista de listas con cuatro productos por fila
+    filas = []
+    columnas = []
+    columna = 0
+    for p in productos:
+        columnas.append(p)
+        columna = columna + 1
 
+        if columna > 3:
+            filas.append(columna)
+            columna = 0
+            columnas = []
+    
+    filas.append(columnas)
+    return filas
 
 
 

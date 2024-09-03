@@ -5,7 +5,7 @@ class FormBoton(forms.Form):
      texto = forms.CharField(label="Botón")
 
 class FormBusqueda(forms.Form):
-    filtro = forms.CharField(label="Filtrar por", required=False)
+    filtro = forms.CharField(label="Buscar prendas en el catálogo", required=False)
 
 class FormEstudiante(forms.Form):
     nombre = forms.CharField(label="Nombre")    
