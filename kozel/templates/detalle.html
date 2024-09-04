@@ -1,10 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<h1>{{articulo.nombre}}</h1>
+
+<div class="fila">
+    <img src="{% static 'images/fotos-kozel/'%}{{articulo.foto1}}" style="margin-left: 5px">
+    <img src="{% static 'images/fotos-kozel/'%}{{articulo.foto2}}">
+
+    <div style="margin-left: 10px; display: inline-block">
+        <p><b>Descripción:</b> {{ articulo.descripcion}}</p>
+        <p><b>Es producto del mes:</b> {{ articulo.producto_mes }}</p>
+        <p><b>Tipo de artículo:</b> {{ articulo.tipoArticulo.nombre }}</p>
+    </div>
+</div>
+
+<div style="margin-left: 10px; display: inline-block">
+    <button style="display: inline-block">S</button>
+    <button style="display: inline-block">L</button>
+    <button style="display: inline-block">XL</button>
+</div>
+
+<div style="margin-left: 10px; display: inline-block">
+    <button style="display: inline-block">Amarillo</button>
+    <button style="display: inline-block">Azul</button>
+    <button style="display: inline-block">Verde</button>
+    <button style="display: inline-block">Rojo</button>
+</div>
 
 
 
-Detalle del artículo {{ articulo.nombre }}:
-<br><br>
-Descripción: {{ articulo.descripcion}}
-<br>
-Es producto del mes: {{ articulo.producto_mes }}
-<br>
-Tipo de artículo: {{ articulo.tipo_articulo.nombre }}
+{% endblock %}

@@ -3,13 +3,6 @@
 
 {% block content %}
 
-<header class="main-header">
-    <a class="logo-header" href="/kozel/busqueda">
-        <span class="site-name">Kozel</span>
-        <span class="site-desc">Unidad Educativa Nueva Semilla</span>
-    </a>
-</header>
-
 <h1>Kozel - Ropa Moderna</h1>
 
 <p style="text-align:center">
@@ -25,20 +18,20 @@
 </div>
 
 <div class="centrar">
-<h2 style="text-align: center;">Productos del mes</h2>
-{% for fila_productos in lista_productos_mes %}
-    <div class="fila">
-        {% for producto in fila_productos %}
-            <div class="columna">
-                <p>
-                <a href="kozel/detalle/{{ producto.id }}/">
-                    <img src="{% static 'images/fotos-kozel/'%}{{producto.foto1}}">
-                </a>
-                </p>
-            </div>
-        {% endfor %}
-    </div>
-{% endfor %}
+    <h2 style="text-align: center;">Productos del mes</h2>
+    {% for fila_productos in lista_productos_mes %}
+        <div class="fila">
+            {% for producto in fila_productos %}
+                <div class="columna">
+                    <p>
+                    <a href="/kozel/detalle/{{ producto.id }}/">
+                        <img src="{% static 'images/fotos-kozel/'%}{{producto.foto1}}">
+                    </a>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
 </div>
 
 {% endblock %}

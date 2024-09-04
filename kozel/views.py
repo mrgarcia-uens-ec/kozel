@@ -42,7 +42,7 @@ def catalogo(request):
             productos_filtrados = Articulo.objects.filter(filtroQ)
             contexto = {
                 "filtro": filtro, 
-                "productos_filtrados": productos_filtrados,
+                "productos_filtrados": agrupar_en_filas(productos_filtrados),
             }
             return render(request, "catalogo.html", contexto)
                

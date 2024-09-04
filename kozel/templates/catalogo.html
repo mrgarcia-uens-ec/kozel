@@ -1,14 +1,28 @@
+{% extends "base.html" %}
 {% load static %}
 
-<h2>Esta es la página que muestra el catálogo</h2>
+{% block content %}
 
-Estoy mostrando los artículos que contienen la palabra {{ filtro }}
-<br>
+<div class="centrar">
+    <h1>Catálogo</h1>
 
-{% for producto in productos_filtrados %}
-    <p>{{ producto.nombre }}
-        <img src="{% static 'images/fotos-kozel/'%}{{producto.foto1}}" width="200">
-            <a href="/kozel/detalle/{{ producto.id }}/">enlace</a>
-        </img>
-    </p>
-{% endfor %}
+    <h2 style="text-align: center;">Mostrando los artículos que contienen la palabra: "{{ filtro }}"</h2>
+
+    <br>
+
+    {% for fila_productos in productos_filtrados %}
+        <div class="fila">
+            {% for producto in fila_productos %}
+                <div class="columna">
+                    <p>
+                    <a href="/kozel/detalle/{{ producto.id }}/">
+                        <img src="{% static 'images/fotos-kozel/'%}{{producto.foto1}}">
+                    </a>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
