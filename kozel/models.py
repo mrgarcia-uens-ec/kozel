@@ -35,7 +35,7 @@ class Carrito(models.Model):
     usuario = models.CharField(max_length=100, null=True)
 
 class CarritoVariedad(models.Model):
-    cantidad = models.DecimalField
+    cantidad = models.PositiveIntegerField(default=0)
     carrito = models.ForeignKey(Carrito, on_delete=models.DO_NOTHING, null=True)
     variedad = models.ForeignKey(Variedad, on_delete=models.DO_NOTHING, null=True)
 

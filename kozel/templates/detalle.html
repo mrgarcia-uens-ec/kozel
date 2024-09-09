@@ -3,32 +3,61 @@
 
 {% block content %}
 
+{{ articulo.id }}
+{{ talla_seleccionada }}
+{{ color_seleccionado }}
+
 <h1>{{articulo.nombre}}</h1>
 
-<div class="fila">
-    <img src="{% static 'images/fotos-kozel/'%}{{articulo.foto1}}" style="margin-left: 5px">
-    <img src="{% static 'images/fotos-kozel/'%}{{articulo.foto2}}">
+<table>
+    <tr>
+        <td  style="margin-left: 5px">
+            <img src="{% static 'images/fotos-kozel/'%}{{articulo.foto1}}">
+            <img src="{% static 'images/fotos-kozel/'%}{{articulo.foto2}}">
+        </td>
 
-    <div style="margin-left: 10px; display: inline-block">
-        <p><b>Descripción:</b> {{ articulo.descripcion}}</p>
-        <p><b>Es producto del mes:</b> {{ articulo.producto_mes }}</p>
-        <p><b>Tipo de artículo:</b> {{ articulo.tipoArticulo.nombre }}</p>
-    </div>
-</div>
+        <td style="margin-left: 10px;">
+            <div>
+                <p><b>Descripción:</b> {{ articulo.descripcion}}</p>
+                <p><b>Es producto del mes:</b> {{ articulo.producto_mes }}</p>
+                <p><b>Tipo de artículo:</b> {{ articulo.tipoArticulo.nombre }}</p>
+            </div>
 
-<div style="margin-left: 10px; display: inline-block">
-    <button style="display: inline-block">S</button>
-    <button style="display: inline-block">L</button>
-    <button style="display: inline-block">XL</button>
-</div>
+            <div>
+                {% for talla in tallas %}
+                    <a href="/kozel/detalle/{{articulo.id}}/{{color_seleccionado}}/{{talla}}" style="display: inline-block">
+                    <button 
+                        style="display: inline-block" 
+                        class="boton-talla boton-talla1 {% if talla == talla_seleccionada %} boton-talla-selected {% endif %}">
+                        {{talla}}
+                    </button>
+                    </a>
+                {% endfor %}
+            </div>
 
-<div style="margin-left: 10px; display: inline-block">
-    <button style="display: inline-block">Amarillo</button>
-    <button style="display: inline-block">Azul</button>
-    <button style="display: inline-block">Verde</button>
-    <button style="display: inline-block">Rojo</button>
-</div>
+            <div>
+                {% for color in colores %}
+                    <a href="/kozel/detalle/{{articulo.id}}/{{color}}/{{talla_seleccionada}}" style="display: inline-block">
+                    <button 
+                        style="display: inline-block; background-color: #{{color}}"; 
+                        class="boton-color boton-color1 {% if color == color_seleccionado %} boton-color-selected {% endif %}">
+                    </button>
+                    </a>
+                {% endfor %}
+            </div>
+        </td>
+    </tr>
+</table>
 
+<form action="/kozel/detalle/{{articulo.id}}/{{color_seleccionado}}/{{talla_seleccionada}}" method="post">
+    {% csrf_token %}
 
+    {{ form }}
+
+    <button class="boton-comprar">
+        <i class="fa fa-shopping-cart fa-1x"></i>
+        Añadir al carrito
+    </button>
+</form>
 
 {% endblock %}

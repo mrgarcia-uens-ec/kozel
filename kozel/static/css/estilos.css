@@ -55,6 +55,58 @@ p {
 	margin: 0.5em 0 0.5em 0;
 }
 
+.boton-talla {
+	border: 2px solid transparent;
+	color: white;
+	padding: 16px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	transition-duration: 0.1s;
+	cursor: pointer
+}
+
+.boton-talla1 {
+	background-color: white;
+	color: black;
+}
+
+.boton-talla1:hover {
+	border: 2px solid #043f2a;
+}
+
+.boton-talla-selected {
+	border: 2px solid #043f2a;
+}
+
+.boton-color {
+	border: 2px solid transparent;
+	border-radius: 10px;
+	padding: 20px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	transition-duration: 0.1s;
+	cursor: pointer
+}
+
+.boton-color1 {
+	background-color: white;
+	color: black;
+}
+
+.boton-color1:hover {
+	border: 2px solid #043f2a;
+}
+
+.boton-color-selected {
+	border: 2px solid #043f2a;
+}
+
 .main-header {
 	background: #a09898;
 	color: white;
@@ -146,5 +198,30 @@ input[type=text], select {
 	border-radius: 4px;
 	font-weight: 100;
 	font-size: 15px;
+	margin-bottom: 10px;
+}
+
+.boton-comprar {
+	border: 2px solid transparent;
+	border-radius: 10px;
+	background-color: green;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 20px;
+	cursor: pointer;
+	padding: 10px;
+	margin-top: 20px;
+}
+
+.number-widget {
+	width: 80px;
+	height: 30px;
+	border: 2px solid #868282;
+	border-radius: 4px;
+	font-weight: 70;
+	font-size: 25px;
+	color: #868282;
 	margin-bottom: 10px;
 }

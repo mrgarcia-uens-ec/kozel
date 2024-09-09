@@ -10,7 +10,7 @@ from .models import Estudiante
 
 from .forms import FormBusqueda
 from .forms import FormEstudiante
-from .forms import FormBoton
+from .forms import FormCarrito
 
 from .models import TipoArticulo
 from .models import Articulo
@@ -18,11 +18,17 @@ from .models import Variedad
 from .models import Carrito
 from .models import CarritoVariedad
 
+import uuid
+
 def index(request):
     contexto = { }
     return render(request, "inicio.html", contexto)
 
 def busqueda(request):
+    # Generar un usuario
+    if 'userid' not in request.session:
+        request.session['userid'] = str(uuid.uuid1())
+
     form = FormBusqueda()    
     lista_productos_mes = Articulo.objects.filter(producto_mes = 'SI')
 
@@ -46,13 +52,61 @@ def catalogo(request):
             }
             return render(request, "catalogo.html", contexto)
                
-def detalle(request, id_articulo):
+def detalle(request, id_articulo, color_seleccionado, talla_seleccionada):
     articulo = Articulo.objects.get(pk=id_articulo)
-    contexto = {
-        "articulo" : articulo
-    }
+    form = FormCarrito(request.POST)
+
+    if request.method == 'POST':
+        # Buscar la variadad seleccionada por el cliente
+        variedad = Variedad.objects.filter(producto=articulo, talla=talla_seleccionada, color=color_seleccionado).get()
+
+        # Insertar una fila en el carrito
+        # Comprobar que el carrito existe
+        usuario = request.session['userid']
+        carrito = Carrito.objects.filter(usuario = usuario)
+        if not carrito:
+            carrito = Carrito(usuario = usuario)
+            carrito.save()
+        else:
+            carrito = carrito.get()
+
+        # obtener la cantidad
+        cantidad = int(form.data["cantidad"])
+
+        # Crear la variedad si no existe. Si existe, añadir la cantidad
+        carritoVariedad = CarritoVariedad.objects.filter(carrito=carrito, variedad=variedad)
+
+        if not carritoVariedad:
+            carritoVariedad = CarritoVariedad(cantidad=cantidad, carrito=carrito, variedad=variedad)
+            carritoVariedad.save()
+        else:
+            nueva_cantidad = carritoVariedad.get().cantidad + cantidad
+            carritoVariedad.update(cantidad = nueva_cantidad)
+
+        return redirect('/kozel/busqueda')
     
-    return render(request, "detalle.html", contexto)
+    else:
+        variedades = Variedad.objects.filter(producto = articulo).values()
+
+        tallas = set([variedad['talla'] for variedad in variedades])
+        colores = set([variedad['color'] for variedad in variedades])
+
+        if talla_seleccionada == '@':
+            talla_seleccionada = list(tallas)[0]
+
+        if color_seleccionado == '@':
+            color_seleccionado = list(colores)[0]
+        
+        contexto = {
+            "articulo" : articulo,
+            "tallas" : tallas,
+            "colores" : colores,
+            "talla_seleccionada" : talla_seleccionada,
+            "color_seleccionado" : color_seleccionado,
+            "form" : form
+        }
+        
+        return render(request, "detalle.html", contexto)
 
 def agrupar_en_filas(productos):
     # Crear una lista de listas con cuatro productos por fila
