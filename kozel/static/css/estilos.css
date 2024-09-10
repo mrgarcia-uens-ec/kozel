@@ -3,7 +3,7 @@ html {
 }
 
 body {
-	margin: 0;
+	margin: 10px;
 	padding: 0;
 	font-family: Helvetica, Arial, sans-serif;
 	color: #a8a2a2;
@@ -22,7 +22,7 @@ body {
 
 .centrar {
 	margin: auto;
-	width:70%
+	width: 50%
 }
 
 .fila {
@@ -124,7 +124,7 @@ p {
 }
 
 .logo-header:hover {
-    color: #0b76a6;
+    color: #868282;
 }
 	
 .logo-header .site-name {
@@ -163,7 +163,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    background: #0b76a6;
+    background: #868282;
 }
 
 .main-content {
@@ -194,7 +194,7 @@ input, label {
 input[type=text], select {
 	width: 200px;
 	height: 20px;
-	border: 2px solid #0b76a6;
+	border: 2px solid #868282;
 	border-radius: 4px;
 	font-weight: 100;
 	font-size: 15px;
@@ -225,3 +225,23 @@ input[type=text], select {
 	color: #868282;
 	margin-bottom: 10px;
 }
+
+.boton-borrar {
+	border: 2px solid transparent;
+	background-color: transparent;
+	color: rgb(179, 173, 173);
+	text-align: center;
+	text-decoration: none;
+	font-size: 25px;
+	cursor: pointer;
+	padding: 5px;
+	margin-left: 20px;
+}
+
+.texto-carrito {
+	margin: 0px;
+	padding: 0px;
+	font-size: 13px;
+}
+
+

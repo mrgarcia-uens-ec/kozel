@@ -4,15 +4,9 @@ from django.shortcuts import redirect
 
 from django.db.models import Q
 
-from .models import Curso
-from .models import Asignatura
-from .models import Estudiante
-
 from .forms import FormBusqueda
-from .forms import FormEstudiante
 from .forms import FormCarrito
 
-from .models import TipoArticulo
 from .models import Articulo
 from .models import Variedad
 from .models import Carrito
@@ -108,6 +102,29 @@ def detalle(request, id_articulo, color_seleccionado, talla_seleccionada):
         
         return render(request, "detalle.html", contexto)
 
+def carrito(request, id_carrito_variedad):
+
+    # Obtener el carrito
+    usuario = request.session['userid']
+    carrito = Carrito.objects.filter(usuario=usuario).get()
+
+    # Obtener el contenido del carrito
+    contenido_carrito = CarritoVariedad.objects.filter(carrito=carrito)
+    #contenido_carrito = [articulo for articulo in contenido_carrito]
+
+    # Cuando se pulsa el botón de borrar
+    if id_carrito_variedad != 0:
+        # borrar el carrito - variedad seleccionado
+        CarritoVariedad.objects.get(pk=id_carrito_variedad).delete()
+
+    contexto = {
+        "fecha_creacion" : carrito.fechaCreacion,
+        "usuario": carrito.usuario,
+        "contenido_carrito" : contenido_carrito,
+    }
+    
+    return render(request, "carrito.html", contexto)
+
 def agrupar_en_filas(productos):
     # Crear una lista de listas con cuatro productos por fila
     filas = []
@@ -125,74 +142,3 @@ def agrupar_en_filas(productos):
     filas.append(columnas)
     return filas
 
-
-
-
-
-
-
-
-
-# ===========================================================
-def adios(request):
-    return HttpResponse("Adiós")
-
-def mostrarhtml(request):
-    lista_cursos = Curso.objects.all()
-    contexto = {
-        "lista_cursos": lista_cursos
-    }
-    return render(request, "cursos.html", contexto)
-
-def lista_de_asignaturas(request):
-    lista_asignaturas = Asignatura.objects.all()
-    contexto = {
-        "lista_asignaturas": lista_asignaturas,
-        "equipos_de_futbol": ["Real Madrid", "Atlético de Madrid", "Español"],
-        "mi_nombre": "Pepe"
-    }
-    return render(request, "asignaturas.html", contexto)
-
-def lista_de_estudiantes(request):
-    if request.method == 'POST':
-        form = FormBusqueda(request.POST)
-        if form.is_valid():
-            filtro = form.cleaned_data["filtro"]
-            filtroQ = Q(nombre__contains=filtro) | Q(apellidos__contains=filtro)
-    else:
-        form = FormBusqueda()
-        filtroQ = ~Q(pk__in=[])
-    
-    lista_estudiantes = Estudiante.objects.filter(filtroQ)
-    contexto = {
-        "lista_estudiantes": lista_estudiantes,
-        "form": form
-    }
-    return render(request, "estudiantes.html", contexto)
-
-def detalle_estudiante(request, id_estudiante):
-    if request.method == 'POST':
-        form = FormEstudiante(request.POST)
-        if form.is_valid():
-            Estudiante.objects.filter(pk=id_estudiante).update(
-                nombre = form.cleaned_data["nombre"],
-                apellidos = form.cleaned_data["apellidos"],
-                fecha_nacimiento = form.cleaned_data["fecha_nacimiento"],
-                foto = form.cleaned_data["foto"],
-                curso_id = form.cleaned_data["curso"].id                
-            )
-            return redirect(lista_de_estudiantes)
-    else:
-        estudiante = Estudiante.objects.get(pk=id_estudiante)
-        form = FormEstudiante()
-        form.initial['nombre'] = estudiante.nombre
-        form.initial['apellidos'] = estudiante.apellidos
-        form.initial['fecha_nacimiento'] = estudiante.fecha_nacimiento
-        form.initial['foto'] = estudiante.foto
-        form.initial['curso'] = estudiante.curso
-
-        contexto = {
-            "estudiante": estudiante,
-            "form": form
-        }
-        return render(request, "estudiante.html", contexto)
